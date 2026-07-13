@@ -27,6 +27,13 @@ Flujos que importan:
 3. **Admin:** `[data-login-demo]` → shell. Agenda: `[data-date-input]` + dispatchEvent("change"). Cobrar desde Caja → el total del día visible se actualiza (la venta se registra en la fecha del turno, no en "hoy").
 4. **Re-brand:** backup `config.js`, cambiar name/colores/servicio, reload, assert, restaurar.
 
+## Multi-negocio (15 configs en negocios/)
+
+- Negocio activo: `?n=slug` → localStorage `pelu:activeBiz` → peluqueria-pepe. Switcher en `negocios.html` (15 cards).
+- Para QA de las 15 landings usar `scratchpad/qa-final.js` como referencia: contexto con `reducedMotion: 'reduce'` (si no, las secciones `.reveal` salen vacías en el fullPage) y scrollear la página antes del screenshot (imágenes lazy).
+- El chip "Hoy" puede no tener horarios por el leadTime de 60 min: probar los días siguientes antes de declarar "0 slots".
+- `wide: true` en fotos de galería = ocupa 2 FILAS en desktop (énfasis vertical): usarlo solo con fotos verticales o cuadradas.
+
 ## Gotchas
 
 - HOY puede ser lunes/domingo (cerrado): la agenda default salta al último día abierto; el chip "Hoy" queda deshabilitado. No es un bug.
