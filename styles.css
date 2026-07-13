@@ -165,6 +165,9 @@ h1, h2, h3, h4 { font-family: var(--display); font-weight: 500; line-height: 1.0
 .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--clay); display: inline-block; }
 
 .hero__media { position: relative; }
+/* Negocio sin foto de hero: la columna de texto ocupa todo */
+.hero__grid--solo { grid-template-columns: 1fr; }
+.hero__grid--solo .hero__copy { max-width: 62ch; }
 .hero__badge {
   position: absolute; left: -22px; bottom: 28px; background: var(--clay); color: var(--bone);
   border-radius: var(--radius-lg); padding: 1rem 1.25rem; box-shadow: var(--shadow-md);
@@ -252,6 +255,7 @@ h1, h2, h3, h4 { font-family: var(--display); font-weight: 500; line-height: 1.0
 
 /* Nosotros */
 .about { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.about--solo { grid-template-columns: 1fr; }
 .about__copy p { color: var(--muted); margin-bottom: 1rem; max-width: 52ch; }
 .about__copy .section__title { color: var(--ink); }
 .checklist { margin-top: 1.5rem; display: grid; gap: .75rem; }
@@ -361,3 +365,6 @@ h1, h2, h3, h4 { font-family: var(--display); font-weight: 500; line-height: 1.0
   .footer__grid { grid-template-columns: 1fr; gap: 2rem; }
   .footer__bottom { flex-direction: column; }
 }
+
+/* Un [hidden] siempre gana, tenga el display que tenga la clase del elemento */
+[hidden] { display: none !important; }

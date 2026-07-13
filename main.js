@@ -10,6 +10,7 @@
 
   var CFG = window.PELU_CONFIG || {};
   var BIZ = CFG.business || {};
+  var CONTENT = CFG.content || {};
   var BOOKING_ON = !!(CFG.booking && CFG.booking.enabled);
 
   /* ---- Helper: leer "a.b.c" del config ---- */
@@ -59,6 +60,122 @@
         var line = el.closest("p") || el;
         line.remove();
       }
+    });
+    var fullName = ((BIZ.over || "") + " " + (BIZ.name || "")).trim();
+    if (fullName) {
+      document.querySelectorAll(".brand").forEach(function (el) {
+        el.setAttribute("aria-label", fullName);
+      });
+      document.querySelectorAll("[data-cfg-fullname]").forEach(function (el) {
+        el.textContent = fullName;
+      });
+    }
+  }
+
+  /* ---- <title> y meta description del negocio activo ---- */
+  function hydrateMeta() {
+    var meta = CONTENT.meta || {};
+    if (meta.title) document.title = meta.title;
+    if (meta.description) {
+      var el = document.querySelector('meta[name="description"]');
+      if (el) el.setAttribute("content", meta.description);
+    }
+  }
+
+  /* ---- Foto del hero (sin foto: layout solo-texto) ---- */
+  function renderHeroPhoto() {
+    var img = document.querySelector("[data-hero-photo]");
+    if (!img) return;
+    var photo = (CONTENT.hero || {}).photo;
+    if (photo && photo.src) {
+      img.setAttribute("src", photo.src);
+      img.setAttribute("alt", photo.alt || "");
+    } else {
+      var media = img.closest(".hero__media");
+      if (media) media.style.display = "none";
+      var grid = document.querySelector(".hero__grid");
+      if (grid) grid.classList.add("hero__grid--solo");
+    }
+  }
+
+  /* ---- Galería desde config (sin fotos se oculta entera) ---- */
+  function renderGallery() {
+    var wrap = document.querySelector("[data-gallery]");
+    if (!wrap) return;
+    var photos = (CONTENT.gallery || {}).photos || [];
+    if (!photos.length) {
+      var section = document.getElementById("galeria");
+      if (section) section.style.display = "none";
+      document.querySelectorAll('a[href="#galeria"]').forEach(function (a) {
+        (a.closest("li") || a).remove();
+      });
+      return;
+    }
+    wrap.innerHTML = "";
+    photos.forEach(function (p) {
+      var fig = document.createElement("figure");
+      fig.className = "frame" + (p.wide ? " frame--wide" : "");
+      var img = document.createElement("img");
+      img.src = p.src;
+      img.alt = p.alt || "";
+      img.loading = "lazy";
+      fig.appendChild(img);
+      wrap.appendChild(fig);
+    });
+  }
+
+  /* ---- Nosotros: párrafos, checklist y foto ---- */
+  function renderAbout() {
+    var about = CONTENT.about || {};
+    var box = document.querySelector("[data-about-paragraphs]");
+    if (box && about.paragraphs && about.paragraphs.length) {
+      box.innerHTML = "";
+      about.paragraphs.forEach(function (text) {
+        var p = document.createElement("p");
+        p.textContent = text;
+        box.appendChild(p);
+      });
+    }
+    var list = document.querySelector("[data-about-checklist]");
+    if (list && about.checklist && about.checklist.length) {
+      list.innerHTML = "";
+      about.checklist.forEach(function (text) {
+        var li = document.createElement("li");
+        li.textContent = text;
+        list.appendChild(li);
+      });
+    }
+    var img = document.querySelector("[data-about-photo]");
+    if (img) {
+      if (about.photo && about.photo.src) {
+        img.setAttribute("src", about.photo.src);
+        img.setAttribute("alt", about.photo.alt || "");
+      } else {
+        var media = img.closest(".about__media");
+        if (media) media.style.display = "none";
+        var grid = document.querySelector(".about");
+        if (grid) grid.classList.add("about--solo");
+      }
+    }
+  }
+
+  /* ---- Reseñas reales del negocio ---- */
+  function renderReviews() {
+    var wrap = document.querySelector("[data-reviews]");
+    if (!wrap) return;
+    var reviews = CONTENT.reviews || [];
+    if (!reviews.length) return; // quedan las del HTML como fallback
+    wrap.innerHTML = "";
+    reviews.forEach(function (r) {
+      var quote = document.createElement("blockquote");
+      quote.className = "reveal";
+      var p = document.createElement("p");
+      p.textContent = "“" + r.text + "”";
+      var cite = document.createElement("cite");
+      cite.textContent = r.author + " · ★★★★★ en Google";
+      quote.appendChild(p);
+      quote.appendChild(cite);
+      wrap.appendChild(quote);
     });
   }
 
@@ -240,8 +357,13 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    hydrateMeta();
     hydrateTexts();
     hydrateContacts();
+    renderHeroPhoto();
+    renderGallery();
+    renderAbout();
+    renderReviews();
     renderServices();
     renderHours();
     renderHoursShort();

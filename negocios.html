@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demos · Lista A Belgrano</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🗂️%3C/text%3E%3C/svg%3E" />
+
+  <!-- Página interna para Agustín: elegir qué negocio muestra el demo.
+       No está linkeada desde la landing; guardala en favoritos del celu. -->
+  <script src="negocios/coco-buenos-aires.js"></script>
+  <script src="negocios/peluqueria-pepe.js"></script>
+  <script src="negocios/cosa-de-mujeres.js"></script>
+  <script src="negocios/byron-masoterapia.js"></script>
+  <script src="negocios/veterinaria-ryb.js"></script>
+  <script src="negocios/veterinaria-aurora.js"></script>
+  <script src="negocios/paorelia.js"></script>
+  <script src="negocios/lumina-depilacion.js"></script>
+  <script src="negocios/peluqueria-ezeangel.js"></script>
+  <script src="negocios/veterinaria-janpu.js"></script>
+  <script src="negocios/lolitas-nails.js"></script>
+  <script src="negocios/lo-de-nelly.js"></script>
+  <script src="negocios/pilates-line.js"></script>
+  <script src="negocios/odontologia-roma.js"></script>
+  <script src="negocios/daniel-fraga.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: #16120e; color: #f2ece2; padding: 1.25rem 1rem 3rem;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    h1 { font-size: 1.35rem; margin-bottom: .35rem; }
+    .sub { color: #b3a795; font-size: .9rem; margin-bottom: 1.5rem; line-height: 1.45; }
+    .cards { display: grid; gap: .8rem; }
+    .card {
+      background: #221c15; border: 1px solid #382e22; border-radius: 14px;
+      padding: .95rem 1rem; display: block; color: inherit; text-decoration: none;
+    }
+    .card[data-active] { border-color: #b66544; box-shadow: 0 0 0 1px #b66544; }
+    .card__top { display: flex; align-items: center; gap: .7rem; }
+    .swatch {
+      width: 38px; height: 38px; border-radius: 10px; flex: none;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .card__name { font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
+    .card__meta { color: #b3a795; font-size: .82rem; margin-top: .15rem; }
+    .badge {
+      margin-left: auto; flex: none; font-size: .68rem; font-weight: 700; letter-spacing: .06em;
+      color: #16120e; background: #d98e6e; border-radius: 99px; padding: .25rem .6rem;
+    }
+    .num { color: #7d6f5c; font-weight: 700; font-size: .82rem; width: 1.4rem; flex: none; }
+    .card__actions { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .8rem; }
+    .card__actions a, .card__actions button {
+      font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer;
+      color: #e8dfd0; background: #2e261c; border: 1px solid #443828;
+      border-radius: 9px; padding: .45rem .7rem; text-decoration: none;
+    }
+    .card__actions .go { background: #b66544; border-color: #b66544; color: #fff; }
+    .tip { margin-top: 1.75rem; color: #7d6f5c; font-size: .8rem; line-height: 1.5; }
+    .tip code { color: #b3a795; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Demos · Lista A Belgrano</h1>
+    <p class="sub">
+      Tocá un negocio y el demo entero (landing, turnos y panel) queda con su identidad
+      en este teléfono. Para mandarle el demo a un prospecto, usá "Copiar link".
+    </p>
+    <div class="cards" data-cards></div>
+    <p class="tip">
+      Cada negocio guarda sus propios datos de demo en este navegador.
+      Link directo: <code>index.html?n=slug</code>. Esta página no está linkeada
+      desde la landing: guardala en favoritos.
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+      var reg = window.PELU_NEGOCIOS || {};
+      var items = Object.keys(reg).map(function (k) { return reg[k]; })
+        .sort(function (a, b) { return (a.orden || 99) - (b.orden || 99); });
+
+      var active = null;
+      try { active = window.localStorage.getItem("pelu:activeBiz"); } catch (e) {}
+
+      var wrap = document.querySelector("[data-cards]");
+
+      items.forEach(function (cfg) {
+        var biz = cfg.business || {};
+        var colors = (cfg.theme && cfg.theme.colors) || {};
+        var card = document.createElement("a");
+        card.className = "card";
+        card.href = "index.html?n=" + encodeURIComponent(cfg.slug);
+        if (cfg.slug === active) card.setAttribute("data-active", "");
+
+        var top = document.createElement("div");
+        top.className = "card__top";
+
+        var num = document.createElement("span");
+        num.className = "num";
+        num.textContent = cfg.orden ? "#" + cfg.orden : "";
+
+        var swatch = document.createElement("span");
+        swatch.className = "swatch";
+        swatch.style.background = "linear-gradient(135deg, " +
+          (colors.clay || "#b66544") + " 55%, " + (colors.bone || "#f6f1e9") + " 55%)";
+
+        var nameBox = document.createElement("div");
+        var name = document.createElement("div");
+        name.className = "card__name";
+        name.textContent = ((biz.over || "") + " " + (biz.name || "")).trim();
+        var meta = document.createElement("div");
+        meta.className = "card__meta";
+        var rating = biz.rating ? biz.rating.score + "★ (" + biz.rating.count + ")" : "";
+        meta.textContent = [cfg.rubro, (biz.address || {}).street, rating]
+          .filter(Boolean).join(" · ");
+        nameBox.appendChild(name);
+        nameBox.appendChild(meta);
+
+        top.appendChild(num);
+        top.appendChild(swatch);
+        top.appendChild(nameBox);
+        if (cfg.slug === active) {
+          var badge = document.createElement("span");
+          badge.className = "badge";
+          badge.textContent = "ACTIVO";
+          top.appendChild(badge);
+        }
+
+        var actions = document.createElement("div");
+        actions.className = "card__actions";
+
+        function link(label, href, cls) {
+          var a = document.createElement("a");
+          a.textContent = label;
+          a.href = href;
+          if (cls) a.className = cls;
+          // que el tap en el botón no dispare también el link de la card
+          a.addEventListener("click", function (e) { e.stopPropagation(); });
+          return a;
+        }
+
+        actions.appendChild(link("Ver demo", "index.html?n=" + cfg.slug, "go"));
+        actions.appendChild(link("Turnos", "turnos.html?n=" + cfg.slug));
+        actions.appendChild(link("Admin", "admin.html?n=" + cfg.slug));
+        if (biz.phoneE164) actions.appendChild(link("Llamar", "tel:" + biz.phoneE164));
+
+        var copy = document.createElement("button");
+        copy.type = "button";
+        copy.textContent = "Copiar link";
+        copy.addEventListener("click", function (e) {
+          e.preventDefault(); e.stopPropagation();
+          var url = new URL("index.html?n=" + cfg.slug, window.location.href).href;
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(function () {
+              copy.textContent = "¡Copiado!";
+              setTimeout(function () { copy.textContent = "Copiar link"; }, 1600);
+            });
+          } else {
+            window.prompt("Copiá el link:", url);
+          }
+        });
+        actions.appendChild(copy);
+
+        card.appendChild(top);
+        card.appendChild(actions);
+        wrap.appendChild(card);
+      });
+    })();
+  </script>
+</body>
+</html>
