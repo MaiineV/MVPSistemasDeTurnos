@@ -161,7 +161,9 @@
 .login-demo-hint button { background: none; border: none; font: inherit; color: var(--clay-deep); font-weight: 700; cursor: pointer; text-decoration: underline; }
 
 /* ---------- Shell ---------- */
-.admin-shell { display: grid; grid-template-rows: auto 1fr; min-height: 100vh; }
+/* minmax(0,1fr) evita que el min-width de las tablas expanda el viewport en mobile */
+.admin-shell { display: grid; grid-template-rows: auto 1fr; grid-template-columns: minmax(0, 1fr); min-height: 100vh; }
+.admin-main { min-width: 0; }
 .admin-topbar {
   display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
   background: var(--bone); border-bottom: 1px solid var(--line);
