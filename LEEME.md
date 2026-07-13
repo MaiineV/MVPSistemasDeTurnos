@@ -48,15 +48,22 @@ colores, servicios (con precio y duración), profesionales y horarios.
 - **Reseñas:** dos reales (Nicolás Torok y Cristian Pieslinger)
 - **Peluqueros:** Héctor y Pilo (hero, Nosotros, reseñas y sistema de turnos)
 
+## Fotos (ya cargadas)
+
+Las fotos de `assets/` salen del **perfil público de Google Maps del negocio**
+(bajadas con `production/outbound/place-photos.py` del proyecto MVG). Autores:
+fachada.jpg (Marcelo Pompei) · salon-noche.jpg (Nicolás Torok) · vidriera.jpg
+(German Romanowskij) · cortando.jpg (Martin Rocha) · secando.jpg (Rodolfo B) ·
+interior.jpg y pared.jpg (subidas por el propio negocio). Para el DEMO que se le
+muestra al dueño está perfecto; para publicar la versión final conviene pedirle
+fotos propias o su OK. Verificado 2026-07: el local NO tiene Instagram propio.
+
 ## Lo que falta para mostrarlo
 
-1. **Fotos.** Pedile 5 o 6 del Instagram y reemplazá los `<figure class="frame ph ...">`
-   de `index.html` por `<figure class="frame"><img src="assets/corte-1.jpg" alt="..." /></figure>`.
-2. **WhatsApp.** `config.js` tiene el **fijo**. Si atienden WhatsApp por un celular,
+1. **WhatsApp.** `config.js` tiene el **fijo**. Si atienden WhatsApp por un celular,
    cambiá `business.whatsapp` (formato 54 9 11 + número).
-3. **Servicios y precios.** El menú con precios es de ejemplo: confirmá con Héctor
+2. **Servicios y precios.** El menú con precios es de ejemplo: confirmá con Héctor
    y Pilo qué hacen y a cuánto, y ajustá `services` en `config.js`.
-4. **Instagram.** `@peluqueriapepe` es de ejemplo; poné el real en `config.js`.
 
 ## Estructura
 
