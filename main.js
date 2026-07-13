@@ -54,6 +54,10 @@
       if (BIZ.instagram) {
         el.setAttribute("href", "https://instagram.com/" + BIZ.instagram);
         el.textContent = "@" + BIZ.instagram;
+      } else {
+        // sin Instagram real, mejor no mostrar un handle inventado
+        var line = el.closest("p") || el;
+        line.remove();
       }
     });
   }

@@ -20,7 +20,7 @@ window.PELU_CONFIG = {
     waDefaultMsg: "Hola Pepe! Quería reservar un turno.",
     address: { street: "Av. Congreso 2292", area: "Belgrano, CABA", zip: "C1428BVH" },
     mapsQuery: "Av.+Congreso+2292,+CABA",
-    instagram: "peluqueriapepe",
+    instagram: "",   // verificado 2026-07: el Pepe de Belgrano NO tiene IG (los @pepe* son otros negocios)
     rating: { score: "4,8", count: 402 },
     faviconEmoji: "💈",
   },
