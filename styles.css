@@ -234,6 +234,7 @@ h1, h2, h3, h4 { font-family: var(--display); font-weight: 500; line-height: 1.0
 }
 .service-card h3 { font-size: 1.4rem; margin: 1.4rem 0 .6rem; }
 .service-card p { color: var(--muted); font-size: .98rem; }
+.service-card__meta { margin-top: .8rem; color: var(--clay-deep); font-weight: 600; font-size: .92rem; }
 .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: transparent; }
 .service-card:hover::before { width: 44px; }
 .services__note { margin-top: 2.25rem; color: var(--muted); }

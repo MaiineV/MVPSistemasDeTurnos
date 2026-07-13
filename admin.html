@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de gestión</title>
+  <meta name="description" content="Panel de gestión de turnos: agenda, reservas, clientes y caja." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="app/app.css" />
+
+  <script src="config.js"></script>
+  <script src="app/theme.js"></script>
+</head>
+<body class="admin-body">
+
+  <!-- ===================== LOGIN (demo) ===================== -->
+  <div class="login-wrap" data-login>
+    <form class="login-card" data-login-form>
+      <span class="brand">
+        <span class="brand__over" data-cfg="business.over">Peluquería</span>
+        <span class="brand__name" data-cfg="business.name">Pepe</span>
+      </span>
+      <h1>Panel de gestión</h1>
+      <p class="login-sub">Agenda, reservas, clientes y caja en un solo lugar.</p>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="login-user">Usuario</label>
+          <input id="login-user" type="text" autocomplete="username" />
+        </div>
+        <div class="field">
+          <label for="login-pass">Contraseña</label>
+          <input id="login-pass" type="password" autocomplete="current-password" />
+        </div>
+        <button class="btn btn--solid btn--block" type="submit" data-login-submit>Entrar</button>
+      </div>
+      <p class="login-demo-hint">Es una demo: <button type="button" data-login-demo>entrar como demo</button></p>
+    </form>
+  </div>
+
+  <!-- ===================== SHELL ===================== -->
+  <div class="admin-shell" data-shell hidden>
+    <header class="admin-topbar">
+      <span class="brand">
+        <span class="brand__over" data-cfg="business.over">Peluquería</span>
+        <span class="brand__name" data-cfg="business.name">Pepe</span>
+      </span>
+      <span class="admin-badge">Demo</span>
+
+      <nav class="admin-tabs" role="tablist" aria-label="Secciones">
+        <button role="tab" data-tab="agenda" aria-selected="true">Agenda</button>
+        <button role="tab" data-tab="reservas" aria-selected="false">Reservas</button>
+        <button role="tab" data-tab="clientes" aria-selected="false">Clientes</button>
+        <button role="tab" data-tab="caja" aria-selected="false">Caja</button>
+      </nav>
+
+      <div class="admin-actions">
+        <button class="btn btn--ghost" type="button" data-reset>Reiniciar demo</button>
+        <button class="btn btn--ghost" type="button" data-logout>Salir</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <!-- ---- Agenda ---- -->
+      <section data-panel="agenda">
+        <div class="admin-head">
+          <h2>Agenda</h2>
+          <div class="date-nav">
+            <button class="btn btn--ghost" type="button" data-date-prev aria-label="Día anterior">‹</button>
+            <button class="btn btn--ghost" type="button" data-date-today>Hoy</button>
+            <button class="btn btn--ghost" type="button" data-date-next aria-label="Día siguiente">›</button>
+            <input type="date" data-date-input aria-label="Elegir fecha" />
+            <span class="date-nav__label" data-date-label></span>
+          </div>
+        </div>
+        <div class="agenda-grid" data-agenda></div>
+      </section>
+
+      <!-- ---- Reservas ---- -->
+      <section data-panel="reservas" hidden>
+        <div class="admin-head"><h2>Reservas</h2></div>
+        <div class="filter-row">
+          <select data-filter-range aria-label="Rango">
+            <option value="upcoming" selected>Próximas</option>
+            <option value="past">Pasadas</option>
+            <option value="all">Todas</option>
+          </select>
+          <select data-filter-status aria-label="Estado">
+            <option value="" selected>Todos los estados</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="confirmado">Confirmado</option>
+            <option value="completado">Completado</option>
+            <option value="cancelado">Cancelado</option>
+            <option value="no-show">No vino</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>Fecha</th><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Profesional</th><th>Estado</th><th>Precio</th></tr>
+            </thead>
+            <tbody data-bookings-table></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ---- Clientes ---- -->
+      <section data-panel="clientes" hidden>
+        <div class="admin-head"><h2>Clientes</h2></div>
+        <div class="filter-row">
+          <input type="search" data-client-search placeholder="Buscar por nombre o teléfono…" aria-label="Buscar cliente" />
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>Cliente</th><th>Teléfono</th><th>Visitas</th><th>Última visita</th><th>Total gastado</th></tr>
+            </thead>
+            <tbody data-clients-table></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ---- Caja ---- -->
+      <section data-panel="caja" hidden>
+        <div class="admin-head">
+          <h2>Caja</h2>
+          <div class="date-nav">
+            <button class="btn btn--ghost" type="button" data-date-prev aria-label="Día anterior">‹</button>
+            <button class="btn btn--ghost" type="button" data-date-today>Hoy</button>
+            <button class="btn btn--ghost" type="button" data-date-next aria-label="Día siguiente">›</button>
+            <span class="date-nav__label" data-date-label></span>
+          </div>
+        </div>
+
+        <div class="stat-grid" data-caja-stats></div>
+
+        <div class="admin-head"><h3>Por cobrar</h3></div>
+        <div data-caja-pending></div>
+
+        <div class="admin-head mt-1"><h3>Cobros del día</h3></div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>Hora</th><th>Detalle</th><th>Profesional</th><th>Método</th><th>Total</th></tr>
+            </thead>
+            <tbody data-sales-table></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ---- Dialog: detalle de reserva ---- -->
+  <dialog class="app-dialog" data-booking-dialog>
+    <div class="dialog-head">
+      <h3>Detalle del turno</h3>
+      <button class="dialog-close" type="button" data-dialog-close aria-label="Cerrar">×</button>
+    </div>
+    <div class="dialog-body">
+      <dl data-booking-detail></dl>
+      <div class="field" data-charge-method-wrap hidden>
+        <label for="charge-method">Método de pago</label>
+        <select id="charge-method"></select>
+      </div>
+      <div class="dialog-actions" data-booking-actions></div>
+    </div>
+  </dialog>
+
+  <!-- ---- Dialog: historial de cliente ---- -->
+  <dialog class="app-dialog" data-client-dialog>
+    <div class="dialog-head">
+      <h3 data-client-name>Cliente</h3>
+      <button class="dialog-close" type="button" data-dialog-close aria-label="Cerrar">×</button>
+    </div>
+    <div class="dialog-body">
+      <dl data-client-detail></dl>
+      <div class="table-wrap">
+        <table class="table" style="min-width:0">
+          <thead><tr><th>Fecha</th><th>Servicio</th><th>Estado</th></tr></thead>
+          <tbody data-client-history></tbody>
+        </table>
+      </div>
+    </div>
+  </dialog>
+
+  <p class="sr-only" role="status" aria-live="polite" data-live></p>
+
+  <script src="app/store.js"></script>
+  <script src="main.js"></script>
+  <script src="app/admin.js"></script>
+</body>
+</html>

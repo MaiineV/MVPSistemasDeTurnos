@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservar turno</title>
+  <meta name="description" content="Reservá tu turno online: elegí servicio, profesional, día y hora." />
+  <meta name="robots" content="noindex" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="app/app.css" />
+
+  <script src="config.js"></script>
+  <script src="app/theme.js"></script>
+</head>
+<body>
+  <header class="site-header" data-header>
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Volver al inicio">
+        <span class="brand__over" data-cfg="business.over">Peluquería</span>
+        <span class="brand__name" data-cfg="business.name">Pepe</span>
+      </a>
+      <a class="back-link" href="index.html">‹ Volver al sitio</a>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="container">
+      <h1 class="app-title">Reservá tu turno</h1>
+      <p class="app-sub">Elegí servicio, profesional, día y hora. Tarda menos de un minuto.</p>
+
+      <ol class="steps" data-steps>
+        <li aria-current="step">Servicio</li>
+        <li>Profesional</li>
+        <li>Fecha y hora</li>
+        <li>Tus datos</li>
+      </ol>
+
+      <!-- Paso 1: servicio -->
+      <section data-step="service" aria-labelledby="step-service-title">
+        <h2 id="step-service-title" class="sr-only" tabindex="-1">Elegí el servicio</h2>
+        <div class="option-grid" data-service-list></div>
+      </section>
+
+      <!-- Paso 2: profesional -->
+      <section data-step="staff" hidden aria-labelledby="step-staff-title">
+        <h2 id="step-staff-title" class="sr-only" tabindex="-1">Elegí el profesional</h2>
+        <div class="option-grid" data-staff-list></div>
+        <div class="wizard-nav">
+          <button class="btn btn--ghost" type="button" data-back>‹ Atrás</button>
+        </div>
+      </section>
+
+      <!-- Paso 3: fecha y hora -->
+      <section data-step="datetime" hidden aria-labelledby="step-datetime-title">
+        <h2 id="step-datetime-title" class="sr-only" tabindex="-1">Elegí día y horario</h2>
+        <div class="chip-row" data-day-strip role="group" aria-label="Elegí el día"></div>
+        <div data-slot-area>
+          <p class="empty-note">Elegí un día para ver los horarios disponibles.</p>
+        </div>
+        <div class="wizard-nav">
+          <button class="btn btn--ghost" type="button" data-back>‹ Atrás</button>
+        </div>
+      </section>
+
+      <!-- Paso 4: datos -->
+      <section data-step="details" hidden aria-labelledby="step-details-title">
+        <h2 id="step-details-title" class="sr-only" tabindex="-1">Tus datos</h2>
+
+        <div class="summary-card">
+          <dl data-summary></dl>
+        </div>
+
+        <form class="form-grid" data-booking-form novalidate>
+          <div class="field" data-field="name">
+            <label for="bk-name">Nombre y apellido</label>
+            <input id="bk-name" name="name" type="text" autocomplete="name" required />
+            <p class="field__error">Decinos tu nombre para agendarte.</p>
+          </div>
+          <div class="field" data-field="phone">
+            <label for="bk-phone">Teléfono</label>
+            <input id="bk-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="11 5555-5555" required />
+            <p class="field__error">Dejanos un teléfono para confirmarte el turno.</p>
+          </div>
+          <div class="wizard-nav">
+            <button class="btn btn--ghost" type="button" data-back>‹ Atrás</button>
+            <button class="btn btn--solid" type="submit" data-submit>Confirmar reserva</button>
+          </div>
+          <p class="field__error" data-form-error style="display:none"></p>
+        </form>
+      </section>
+
+      <!-- Paso 5: confirmación -->
+      <section data-step="done" hidden aria-labelledby="step-done-title">
+        <div class="confirm-hero">
+          <div class="confirm-check" aria-hidden="true">✓</div>
+          <h2 id="step-done-title" tabindex="-1">¡Turno reservado!</h2>
+          <p>Te esperamos. Si no podés venir, avisanos con tiempo así liberamos el lugar.</p>
+        </div>
+        <div class="summary-card" style="margin-inline:auto">
+          <dl data-summary-done></dl>
+        </div>
+        <div class="wizard-nav" style="justify-content:center">
+          <a class="btn btn--solid" href="#" data-wa-confirm>Guardar en WhatsApp</a>
+          <a class="btn btn--ghost" href="index.html">Volver al inicio</a>
+        </div>
+      </section>
+
+      <p class="demo-note">Demo de sistema de turnos — los datos son de ejemplo y viven solo en este navegador.</p>
+    </div>
+  </main>
+
+  <p class="sr-only" role="status" aria-live="polite" data-live></p>
+
+  <script src="app/store.js"></script>
+  <script src="main.js"></script>
+  <script src="app/booking.js"></script>
+</body>
+</html>
